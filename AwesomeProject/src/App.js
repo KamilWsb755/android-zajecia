@@ -13,6 +13,8 @@ import {
   Image,
   ImageBackground,
 } from 'react-native';
+import NewButton from './NewButton';
+import Header from './Header';
 
 const App = () => {
 
@@ -23,7 +25,14 @@ const App = () => {
     if (name.length > 3) {
       setSubmit(!submit);
     } else {
-      // Alert.alert('Warning!', 'The name must be longer than 3 characters')
+      ToastAndroid.show('The must be longer than 3 characters', ToastAndroid.LONG)
+    }
+  }
+
+  const anotherPressHandler = () => {
+    if (name.length > 3) {
+      Alert.alert('Kliknięto', 'Przycisk został klikniety')
+    } else {
       ToastAndroid.show('The must be longer than 3 characters', ToastAndroid.LONG)
     }
   }
@@ -33,72 +42,37 @@ const App = () => {
     <ImageBackground style={styles.body}
       source={{ uri: 'https://cdn.pixabay.com/photo/2020/03/25/21/05/pizza-4968645_960_720.jpg' }}
     >
+      <Header />
       <Text style={styles.text}>
         Please write your name:
       </Text>
       <TextInput
         style={styles.input}
         placeholder='write name'
-        // secureTextEntry
         onChangeText={(value) => SetName(value)}
       />
 
-      {/* Pierwszy typ przycisku: */}
-      {/* <Button
-        title={submit ? "Clear" : 'Submit'}
-        onPress={onPressHandler}
-      /> */}
 
-      {/* Przycisk wariant 2: */}
-      {/* <TouchableOpacity
-        style={styles.button}
-        onPress={onPressHandler}
-        activeOpacity={0.1}
-      >
-        <Text style={styles.text}>
-          {submit ? 'Clear' : 'Submit'}
-        </Text>
-      </TouchableOpacity> */}
+      {/* Trzy */}
+      <NewButton title={submit ? "Clear" : "Submit"} onPressFunction={onPressHandler}
+        style={{}}
+      />
 
-      {/* 3 typ przycisku: */}
-      {/* <TouchableHighlight
-        style={styles.button}
-        onPress={onPressHandler}
-        underlayColor={'#ddd'}
-      >
-        <Text style={styles.text}>
-          {submit ? 'Clear' : 'Submit'}
-        </Text>
-      </TouchableHighlight> */}
+      <NewButton title='ButtonExample' onPressFunction={anotherPressHandler}
+        style={{ marginTop: 10, backgroundColor: '#000', width: 200 }}
+      />
 
-
-      {/* Czwarty przycisk */}
-      <Pressable
-        style={({ pressed }) => [
-          { backgroundColor: pressed ? '#ddd' : '#0f0' },
-          styles.button
-        ]}
-        onLongPress={onPressHandler}
-        delayLongPress={300}
-        hitSlop={{ top: 10, bottom: 10, right: 10, left: 10 }}
-      >
-        <Text style={styles.text}>
-          {submit ? 'Clear' : 'Submit'}
-        </Text>
-      </Pressable>
       {
         submit ? <View style={styles.body}>
           <Text style={styles.text}>You are registered as {name}</Text>
           <Image
-            // source={{ uri: 'https://cdn.pixabay.com/photo/2020/03/25/21/05/pizza-4968645_960_720.jpg' }}
-            source={require('./assets/done.png')}
-            // blurRadius={3}
+            source={require('../assets/done.png')}
             style={styles.image}
             resizeMode={'stretch'}
           />
         </View> :
           <Image
-            source={require('./assets/error.png')}
+            source={require('../assets/error.png')}
             style={styles.image}
             resizeMode={'stretch'}
           />
@@ -112,9 +86,10 @@ const styles = StyleSheet.create({
     flex: 1,
     // backgroundColor: '#ffffff',
     alignItems: 'center',
+    color: '#fff'
   },
   text: {
-    color: '#000000',
+    color: '#fff',
     fontSize: 20,
     margin: 10,
   },
@@ -126,11 +101,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     marginBottom: 10,
-  },
-  button: {
-    width: 150,
-    height: 50,
-    alignItems: 'center',
+    color: '#fff'
   },
   image: {
     width: 100,
